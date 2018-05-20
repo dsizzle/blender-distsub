@@ -1,6 +1,8 @@
 # blender-distsub
 Add-on by Dale Cieslak
+
 www.artifisizzler.com
+
 sizzler@artifisizzler.com
 
 The Distance-based Subdivision add-on is a simple script to prevent wasted polygons and slow render times!  In a nutshell, it sets the Subdivision level of objects in your scene based on the distance from the camera.  
