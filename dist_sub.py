@@ -90,7 +90,7 @@ class OBJECT_OT_ExecuteButton(bpy.types.Operator):
         for ob in scene.objects:
             if len(ob.modifiers) > 0:
                 for m in ob.modifiers:
-                    if ob.select == True or scene.AllObjects == True:
+                    if ob.select_get() or scene.AllObjects == True:
                         if m.type == 'SUBSURF':
                             dist = measure(ob.location, cam_obj.location) - scene.NearDist
                             if dist < 0:
@@ -134,7 +134,7 @@ class OBJECT_OT_SetNearDistSelButton(bpy.types.Operator):
         scene = context.scene
         nearVal = 10000.0
         for ob in scene.objects:
-            if ob.select == True:
+            if ob.select_get():
                 dist = measure(ob.location, cam_obj.location)
                 if dist < nearVal:
                     nearVal = dist
@@ -182,7 +182,7 @@ class OBJECT_OT_SetFarDistSelButton(bpy.types.Operator):
         scene = context.scene
         farVal = 0.0
         for ob in scene.objects:
-            if ob.select == True:
+            if ob.select_get():
                 dist = measure(ob.location, cam_obj.location)
                 if dist > farVal:
                     farVal = dist
@@ -209,11 +209,18 @@ def measure (first, second):
     distance = sqrt((locx)**2 + (locy)**2 + (locz)**2) 
     return distance
 
-def register():
-    bpy.utils.register_module(__name__)
+classes = (
+    ToolPropsPanel,
+    OBJECT_OT_ExecuteButton,
+    OBJECT_OT_SetNearDistButton,
+    OBJECT_OT_SetNearDistSelButton,
+    OBJECT_OT_SetNearDistCamButton,
+    OBJECT_OT_SetFarDistButton,
+    OBJECT_OT_SetFarDistSelButton,
+    OBJECT_OT_SetFarDistCamButton
+)
 
-def unregister():
-    bpy.utils.unregister_module(__name__)
+register, unregister = bpy.utils.register_classes_factory(classes)
 
 if __name__ == "__main__":
     register()
